@@ -13,7 +13,7 @@ app.use(express.static("../blog/dist"));
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/", routes);
+app.use("/api", routes);
 
 mongoose
   .connect("mongodb://user:mongopass@localhost:27017/blog_db?authSource=admin")
