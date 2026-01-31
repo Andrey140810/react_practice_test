@@ -1,0 +1,21 @@
+const Comment = require("../models/Comment");
+
+async function addComment(postId, comment) {
+  const newComment = await Comment.create(comment);
+
+  await Post.findById(postId, { $push: { comments: newComment } });
+
+  await newComment.populate("author");
+
+  return newComment;
+}
+
+async function deleteComment(postId, commentId) {
+  await Comment.deleteOne({ _id: commentId });
+  await Post.findById(postId, { $pull: { comments: commentId } });
+}
+
+module.exports = {
+  addComment,
+  deleteComment,
+};
